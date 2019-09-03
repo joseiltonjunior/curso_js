@@ -1,3 +1,3 @@
 # Curso_JS
 
-Curso ministrado pela DEVMEDIA.
+Curso ministrado pela DevMedia.
