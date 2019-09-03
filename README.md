@@ -1,2 +1,3 @@
-# DevMedia_Cursos
- Cursos ministrados pela DevMedia
+# Curso_JS
+
+Curso ministrado pela DEVMEDIA.
