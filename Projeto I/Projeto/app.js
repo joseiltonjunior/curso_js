@@ -1,27 +1,83 @@
-var input = document.getElementById ("quantidade");
-var botaoIncrementa = document.querySelector ("#btn-incrementa");
+// Incrementa
+var botoesIncrementa = document.querySelectorAll(".btn-incrementa");
 
-var botaoDecrementa = document.querySelector ("#btn-decrementa");
-
-botaoDecrementa.addEventListener ('click', decrementa)
-botaoIncrementa.addEventListener ('click', incrementa)
-
-
-
-
-function incrementa () 
+for (let botao of botoesIncrementa)
 {
-    input.value++;
+    botao.addEventListener('click', incrementa);
 
-    var item = botaoIncrementa.closest ('.item');
-    var precoItem = item.querySelector ('.preco-item');
-    var preco = Number (precoItem.textContent);
+    function incrementa()
+    {  
+        var item = botao.closest('.item');
 
-    var elementoTotal = document.querySelector ('#total');
-    elementoTotal.textContent = preco + Number (elementoTotal.textContent);
+        var input = item.querySelector('.quantidade');
+        input.value++;
+
+        var preco = pegaPrecoItem(item);
+        adicionaAoTotal(preco);    
+    }
 }
 
-function decrementa() 
+
+
+// Decrementa
+var botoesDecrementa = document.querySelectorAll(".btn-decrementa");
+
+for (let botao of botoesDecrementa)
 {
-    input.value--;
+   botao.addEventListener('click', decrementa);
+
+    function decrementa()
+    {
+        var item = botao.closest('.item');
+
+        var input = item.querySelector ('.quantidade');
+
+        if (input.value > 0)
+        {
+            input.value--;
+            var preco = pegaPrecoItem(item);
+            adicionaAoTotal(-preco);
+        }
+        else
+        {
+            console.log (input.value);
+        }
+    } 
+}
+
+var formPedido = document.forms.pedido;
+
+formPedido.addEventListener ('submit', function(event)
+{
+  var contador = 0;
+  
+  var inputs = formPedido.querySelectorAll('input.quantidade')
+
+  for (let input of inputs)
+  {
+      if (input.value >0)
+      {
+          contador++;
+      }
+  }
+  if (contador == 0)
+  {
+      alert ('Deve ter pelo menos 1 Pizza no pedido!');
+      event.preventDefault();
+  }
+
+});
+
+
+// Funções auxiliares
+function pegaPrecoItem(item)
+{
+    var precoItem = item.querySelector('.preco-item');
+    return Number(precoItem.textContent);
+}
+
+function adicionaAoTotal (valor)
+{
+    var elementoTotal = document.querySelector('#total');
+    elementoTotal.textContent = valor + Number(elementoTotal.textContent);
 }
